@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jokesg.gg.mvc.sys.dao.RoleDao">
+	
+	<sql id="roleColumns">
+		Id,ParentId,ParentIds,Name,Index,Href,Icon,InsertBy,InsertDate,
+		UpdateBy,UpdateDate,Remarks,DelFlag
+	</sql>
+	
+	<select id="getRoles" resultType="Role">
+		SELECT r.Id,r.Name,r.EnName,r.InsertBy,r.InsertDate,r.UpdateBy,r.UpdateDate,r.Remarks,r.DelFlag 
+		FROM gg_user_role ur , gg_user u , gg_role r
+		WHERE u.Username = #{username} AND u.Id = ur.UserId AND r.Id = ur.RoleId AND r.DelFlag = 1
+	</select>
+	
+</mapper>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jokesg.gg.mvc.ims.dao.CircleFriendsDao">
+
+	<sql id="circleFriendsColumns">
+		cf.Id ,
+		cf.UserId ,
+		cf.Content ,
+		cf.PicUrl ,
+		cf.Source ,
+		cf.InsertBy ,
+		cf.InsertDate ,
+		cf.UpdateBy ,
+		cf.UpdateDate ,
+		cf.Remarks ,
+		cf.DelFlag,
+		u.Id AS "user.Id" ,
+		u.Username AS "user.Username" ,
+		u.Password AS "user.Password" ,
+		u.Name AS "user.Name" ,
+		u.Nickname AS "user.Nickname" ,
+		u.Email AS "user.Email" ,
+		u.Phone AS "user.Phone" ,
+		u.Photo AS "user.Photo" ,
+		u.CompanyId AS "user.CompanyId" ,
+		u.IsCompany AS "user.IsCompany" ,
+		u.LoginIp AS "user.LoginIp" ,
+		u.LoginName AS "user.LoginName" ,
+		u.LoginTime AS "user.LoginTime" ,
+		u.Status AS "user.Status" ,
+		u.IsLogin AS "user.IsLogin" ,
+		u.InsertBy AS "user.InsertBy" ,
+		u.InsertDate AS "user.InsertDate",
+		u.UpdateBy AS "user.UpdateBy" ,
+		u.UpdateDate AS "user.UpdateDate",
+		u.Remarks AS "user.Remarks",
+		u.DelFlag AS "user.DelFlag"
+	</sql>
+
+	<select id="findList" parameterType="String" resultType="CircleFriends">
+		SELECT <include refid="circleFriendsColumns" />
+		FROM gg_user u, gg_circle_friends cf
+		WHERE cf.UserId = #{userId} AND cf.DelFlag = '1' AND u.Id = cf.UserId
+		ORDER BY cf.InsertDate DESC
+	</select>
+
+	<select id="findAllFriends" parameterType="String" resultType="CircleFriends">
+		SELECT <include refid="circleFriendsColumns"/> 
+		FROM gg_circle_friends cf, gg_user u 
+		WHERE cf.UserId in (
+			SELECT UserId 
+			FROM gg_fans 
+			WHERE FansId = #{userId} AND DelFlag = '1'
+		) AND cf.DelFlag = '1' AND cf.UserId = u.Id 
+		ORDER BY cf.InsertDate DESC
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT
+		INTO gg_circle_friends (
+		UserId ,
+		Content ,
+		PicUrl ,
+		Source ,
+		InsertBy ,
+		InsertDate ,
+		UpdateBy ,
+		UpdateDate ,
+		Remarks ,
+		DelFlag
+		) VALUES (
+		#{userId} ,
+		#{content} ,
+		#{picUrl} ,
+		#{source} ,
+		#{insertBy} ,
+		#{insertDate} ,
+		#{updateBy} ,
+		#{updateDate} ,
+		#{remarks} ,
+		#{delFlag}
+		)
+	</insert>
+
+	<update id="update" parameterType="CircleFriends">
+		UPDATE gg_circle_friends SET
+		PicUrl = #{picUrl} WHERE Id = #{id} AND DelFlag = #{delFlag}
+	</update>
+
+	<update id="delete">
+		UPDATE gg_circle_friends SET DeleFlag = '0' WHERE Id
+		= #{id} AND UserId = #{userId}
+	</update>
+
+</mapper>

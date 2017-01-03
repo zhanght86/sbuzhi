@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jokesg.gg.mvc.wallet.dao.ProductsDao">
+
+	<sql id="productsColumns">
+		p.Id ,
+		p.Name ,
+		p.Price ,
+		p.RalPrice ,
+		p.Pic ,
+		p.Type ,
+		p.Stock ,
+		p.Order ,
+		p.InsertBy ,
+		p.InsertDate,
+		p.UpdateBy ,
+		p.UpdateDate,
+		p.Remarks ,
+		p.DelFlag ,
+		up.Id AS "userProducts.Id" ,
+		up.UserId AS "userProducts.UserId" ,
+		up.ProductsId AS "userProducts.ProductsId" ,
+		up.Number AS "userProducts.Number" ,
+		up.InsertBy AS "userProducts.InsertBy" ,
+		up.InsertDate AS "userProducts.InsertDate" ,
+		up.UpdateBy AS "userProducts.UpdateBy" ,
+		up.UpdateDate AS "userProducts.UpdateDate" ,
+		up.Remarks AS "userProducts.Remarks" ,
+		up.DelFlag AS "userProducts.DelFlag" 
+	</sql>
+	
+	<!-- 根据用户ID获取用户当前所有的站内商品 -->
+	<select id="findList" parameterType="String" resultType="Products">
+		SELECT <include refid="productsColumns"/>
+		FROM gg_user_products up, gg_products p 
+		WHERE p.Id = up.ProductsId and UserId = #{userId} AND p.DelFlag = '1' AND up.DelFlag = '1'
+	</select>
+	
+	<!-- 获取站内所有有效的 -->
+	<select id="findAllList" parameterType="Products" resultType="Products">
+		SELECT p.Id ,p.Name ,p.Price ,p.RalPrice ,p.Pic ,p.Type ,p.Stock ,p.Order ,p.InsertBy ,p.InsertDate,p.UpdateBy ,p.UpdateDate,p.Remarks ,p.DelFlag
+		FROM gg_products p
+		WHERE p.DelFlag = #{delFlag} AND p.Type = #{type}
+		GROUP BY p.`Order` ASC
+	</select>
+
+</mapper>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jokesg.gg.mvc.sys.dao.UserDao">
+
+	<sql id="userColumns">
+		u.Id,
+		u.Username,
+		u.Password,
+		u.Name,
+		u.Nickname,
+		u.Email,
+		u.Phone,
+		u.Photo,
+		u.CompanyId,
+		u.IsCompany,
+		u.LoginIp,
+		u.LoginName,
+		u.LoginTime,
+		u.Status,
+		u.IsLogin,
+		u.InsertDate,
+		u.InsertBy,
+		u.UpdateDate,
+		u.UpdateBy,
+		u.Remarks,
+		u.DelFlag
+	</sql>
+
+	<select id="get" parameterType="String" resultType="User">
+		SELECT <include refid="userColumns" />
+		FROM gg_user u
+		WHERE u.Id = #{id} AND u.DelFlag = 1
+	</select>
+
+	<select id="getLoginName" parameterType="String" resultType="User">
+		SELECT <include refid="userColumns" />
+		FROM gg_user u
+		WHERE u.Username = #{username}
+	</select>
+
+	<select id="getUserRole" resultType="String">
+		SELECT ur.RoleId 
+		FROM gg_user_role ur 
+		WHERE ur.UserId = #{userId}
+	</select>
+
+	<insert id="insert" parameterType="User">
+		INSERT INTO gg_user(
+			Id,Username,Password,Name,Nickname,Email,Phone,Photo,CompanyId,
+			IsCompany,LoginIp,LoginName,LoginTime,InsertDate,InsertBy,
+			UpdateDate,UpdateBy,Remarks,Status,DelFlag
+		)
+		VALUES(
+			#{id},#{username},#{password},#{name},#{nickname},#{email},
+			#{phone},#{photo},#{companyId},#{isCompany},#{loginIp},
+			#{LoginName},#{loginTime},#{insertDate},#{insertBy},#{updateDate},
+			#{updateBy},#{remarks},#{status},#{delFlag}
+		)
+	</insert>
+
+	<insert id="addUserRole" parameterType="User">
+		INSERT INTO gg_user_role(
+			UserId,RoleId
+		) VALUES (
+			#{id},#{role.id}
+		)
+	</insert>
+	
+	
+
+	<update id="updateUserRole">
+		UPDATE gg_user_role
+		SET RoleId = 2
+		WHERE UserId = #{userId} AND u.DelFlag = '1' AND u.Status = '1'
+	</update>
+	
+	<update id="updatePasswordById" parameterType="User">
+		UPDATE gg_user u
+		SET u.Password = #{password}, u.UpdateDate = #{updateDate}, u.UpdateBy = #{updateBy}
+		WHERE u.Id = #{id} AND u.DelFlag = '1' AND u.Status = '1'
+	</update>
+	
+	<update id="lockAccount" parameterType="User">
+		UPDATE gg_user u
+		SET u.IsLogin = #{isLogin}, u.UpdateDate = #{updateDate}, u.UpdateBy = #{updateBy}
+		WHERE u.Username = #{username} 
+	</update>
+	
+	<update id="unlockALL">
+		UPDATE gg_user u 
+		SET u.IsLogin = '1' 
+		WHERE u.IsLogin = '0' AND u.DelFlag = '1' AND u.Status = '1'
+	</update>
+	
+	<update id="updateLoginInfo" parameterType="User">
+		UPDATE gg_user u SET u.LoginIp = #{loginIp}, u.LoginName = #{loginName}, u.LoginTime = #{loginTime} WHERE u.id = #{id}	
+	</update>
+	
+</mapper>

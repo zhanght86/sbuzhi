@@ -1,0 +1,25 @@
+	.info11 {
+		position: relative;
+		left: 100px;
+		top: 100px;
+		height: 787px;
+	}
+	h2{
+   		padding: 0px 0px 20px 120px;
+	}
+	
+	.mu1{
+		width: 20%;
+		height: 100%;
+		float:left;
+ 		border: 1px solid red;
+ 		border-color: #333 #333 #f8f8f8 #f8f8f8;
+	}
+	
+	.mu2{
+		width: 80%;
+		height: 100%;
+		float:left;
+ 		border: 1px solid blue;
+ 		border-color: #333 #f8f8f8 #f8f8f8 #333;
+	}

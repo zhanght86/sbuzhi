@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jokesg.gg.mvc.rms.dao.VideoDao">
+
+    <sql id="jokesgColumns">
+		Id ,
+		UserId ,
+		CompanyId ,
+		Name ,
+		Href ,
+		PicUrl ,
+		UserBy,
+		Type ,
+		IsOpenly ,
+		Pwd ,
+		PlayAmount ,
+		InsertBy ,
+		InsertDate ,
+		UpdateBy ,
+		UpdateDate ,
+		Remarks ,
+		DelFlag
+	</sql>
+	
+	<select id="get" resultType="Jokesg">
+		SELECT <include refid="jokesgColumns"/> FROM gg_jokesg
+		WHERE Id = #{id} AND DelFlag = 1
+	</select>
+	
+	<select id="findList" resultType="Jokesg">
+		SELECT <include refid="jokesgColumns"/> FROM gg_jokesg
+		WHERE UserId = #{userId} AND DelFlag = 1 ORDER BY UpdateDate DESC
+	</select>
+	
+	<select id="getNewest" resultType="Jokesg">
+		SELECT <include refid="jokesgColumns"/> FROM (
+			SELECT <include refid="jokesgColumns"/> 
+			FROM gg_jokesg WHERE DelFlag = '1' AND IsOpenly = '1' 
+			ORDER BY InsertDate desc LIMIT 100
+		) newest ORDER BY RAND() LIMIT 8
+	</select>
+	
+	<select id="getHot" resultType="Jokesg">
+		SELECT <include refid="jokesgColumns"/> FROM (
+			SELECT <include refid="jokesgColumns"/> 
+			FROM gg_jokesg WHERE DelFlag = '1' AND IsOpenly = '1'
+			ORDER BY PlayAmount DESC LIMIT 10
+		) hot ORDER BY RAND() LIMIT 8
+	</select>
+	
+	<select id="getVideoMenu" resultType="JokesgMenu">
+		SELECT Id, JokesgId, MenuId 
+		FROM gg_jokesg_menu
+		WHERE JokesgId = #{jokesgId}
+	</select>
+
+	<select id="getVideoByMenuId" resultType="Jokesg" parameterType="JokesgMenu">
+		SELECT <include refid="jokesgColumns"/> 
+		FROM gg_jokesg j WHERE j.id IN(
+			SELECT jm.JokesgId FROM gg_jokesg_menu jm WHERE 1=1
+			<if test="menuId != 806 and menuId != '806'">
+				AND MenuId = #{menuId}
+			</if>
+		) AND j.DelFlag = '1' AND j.IsOpenly = '1' ORDER BY InsertDate DESC LIMIT #{paging.start},#{paging.end}
+	</select>
+	
+	<select id="getVideoByMenuId2" resultType="Jokesg" parameterType="JokesgMenu">
+		SELECT <include refid="jokesgColumns"/> 
+		FROM gg_jokesg j WHERE j.id IN(
+			SELECT jm.JokesgId FROM gg_jokesg_menu jm WHERE 1=1
+			<if test="menuId != 806 and menuId != '806'">
+				AND MenuId = #{menuId}
+			</if>
+		) AND j.DelFlag = '1' AND j.IsOpenly = '1' ORDER BY PlayAmount DESC LIMIT #{paging.start},#{paging.end}
+	</select>
+	
+	<select id="countVideoByMenuId" resultType="int" parameterType="JokesgMenu">
+		SELECT COUNT(0)
+		FROM gg_jokesg WHERE id IN(
+			SELECT JokesgId FROM gg_jokesg_menu WHERE 1=1
+			<if test="menuId != 806 and menuId != '806'">
+				AND MenuId = #{menuId}
+			</if>
+		) ORDER BY InsertDate DESC
+	</select>
+	
+	<insert id="insert" parameterType="Jokesg">
+		INSERT INTO gg_jokesg (
+			Id,
+			UserId,
+			CompanyId,
+			Name,
+			Href,
+			PicUrl,
+			UserBy,
+			Type,
+			IsOpenly,
+			Pwd,
+			PlayAmount,
+			InsertBy,
+			InsertDate,
+			UpdateBy,
+			UpdateDate,
+			Remarks,
+			DelFlag
+		) VALUES (
+			#{id},
+			#{userId},
+			#{companyId},
+			#{name},
+			#{href},
+			#{picUrl},
+			#{userBy},
+			#{type},
+			#{isOpenly},
+			#{pwd},
+			#{playAmount},
+			#{insertBy},
+			#{insertDate},
+			#{updateBy},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<insert id="addJokesgMenu">
+		INSERT INTO gg_jokesg_menu(
+			JokesgId,
+			MenuId
+		) VALUES (
+			#{id},
+			#{menuId}
+		)
+	</insert>
+	
+	<update id="delete">
+		UPDATE gg_jokesg SET DelFlag = '0' WHERE Id = #{id}
+	</update>
+	
+	<update id="update" parameterType="Jokesg">
+		UPDATE gg_jokesg SET
+			<if test="name != null and name != ''">
+				Name = #{name },
+			</if>
+			<if test="picUrl != null and picUrl != ''">
+				PicUrl = #{picUrl },
+			</if>
+			<if test="isOpenly != null and isOpenly != ''">
+				IsOpenly = #{isOpenly },
+			</if>
+			<if test="pwd != null and pwd != ''">
+				Pwd = #{pwd },
+			</if>
+			UpdateBy = #{updateBy },
+			UpdateDate = #{updateDate },
+			<if test="remarks != null and remarks != ''">
+				Remarks = #{remarks }
+			</if>
+		WHERE Id = #{id}
+	</update>
+	
+	<update id="playAmount">
+		UPDATE gg_jokesg SET PlayAmount = (PlayAmount+1) where Id = #{id}
+	</update>
+	
+</mapper>

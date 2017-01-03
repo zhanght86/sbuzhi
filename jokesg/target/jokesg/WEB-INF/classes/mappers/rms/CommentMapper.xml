@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jokesg.gg.mvc.rms.dao.CommentDao">
+
+    <sql id="commentColumns">
+		c.Id ,
+		c.JokesgId ,
+		c.VideosId ,
+		c.UserId ,
+		c.Content ,
+		c.InsertBy ,
+		c.InsertDate ,
+		c.UpdateBy ,
+		c.UpdateDate ,
+		c.Remarks ,
+		c.DelFlag ,
+		u.Id AS "user.Id" ,
+		u.Username AS "user.Username" ,
+		u.Password AS "user.Password" ,
+		u.Name AS "user.Name" ,
+		u.Nickname AS "user.Nickname" ,
+		u.Email AS "user.Email" ,
+		u.Phone AS "user.Phone" ,
+		u.Photo AS "user.Photo" ,
+		u.CompanyId AS "user.CompanyId" ,
+		u.IsCompany AS "user.IsCompany" ,
+		u.LoginIp AS "user.LoginIp" ,
+		u.LoginName AS "user.LoginName" ,
+		u.LoginTime AS "user.LoginTime" ,
+		u.Status AS "user.Status" ,
+		u.IsLogin AS "user.IsLogin" ,
+		u.InsertBy AS "user.InsertBy" ,
+		u.InsertDate AS "user.InsertDate",
+		u.UpdateBy AS "user.UpdateBy" ,
+		u.UpdateDate AS "user.UpdateDate",
+		u.Remarks AS "user.Remarks",
+		u.DelFlag AS "user.DelFlag"
+	</sql>
+
+	<select id="findAllList" parameterType="Comment" resultType="Comment">
+		SELECT <include refid="commentColumns"/> 
+		FROM gg_comment c LEFT JOIN gg_user u
+		ON c.UserId = u.Id
+		WHERE c.DelFlag = #{delFlag} AND c.JokesgId = #{jokesgId}
+		ORDER BY c.InsertDate DESC 
+		LIMIT #{paging.start}, #{paging.end}
+	</select>
+	
+	<select id="count" parameterType="Comment" resultType="int">
+		SELECT COUNT(0)
+		FROM gg_comment c LEFT JOIN gg_user u
+		ON c.UserId = u.Id
+		WHERE c.DelFlag = #{delFlag} AND c.JokesgId = #{jokesgId}
+		ORDER BY c.InsertDate DESC 
+	</select>
+	
+	<insert id="insert" parameterType="Comment">
+		INSERT INTO gg_comment(
+			JokesgId ,
+			VideosId ,
+			UserId ,
+			Content ,
+			InsertBy ,
+			InsertDate ,
+			UpdateBy ,
+			UpdateDate ,
+			Remarks ,
+			DelFlag
+		)VALUES(
+			#{jokesgId } ,
+			#{videosId } ,
+			#{userId } ,
+			#{content } ,
+			#{insertBy } ,
+			#{insertDate } ,
+			#{updateBy } ,
+			#{updateDate } ,
+			#{remarks } ,
+			#{delFlag }
+		)
+	</insert>
+	
+	<update id="delete" parameterType="Comment">
+		UPDATE gg_comment SET DelFlag = #{delFlag} 
+		WHERE Id = #{id} AND UserId = #{userId}
+	</update>
+	
+</mapper>
