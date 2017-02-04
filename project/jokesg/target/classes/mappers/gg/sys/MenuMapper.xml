@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sbuzhi.gg.mvc.sys.dao.MenuDao">
+
+	<sql id="menuColumns">
+		m.Id,
+		m.ParentId,
+		m.ParentIds,
+		m.Name,
+		m.Index,
+		m.Href,
+		m.Icon,
+		m.permission,
+		m.IsShow,
+		m.InsertDate,
+		m.InsertBy,
+		m.UpdateDate,
+		m.UpdateBy,
+		m.Remarks,
+		m.DelFlag
+	</sql>
+	
+	<select id="getSubMenus" parameterType="Menu" resultType="Menu">
+		SELECT <include refid="menuColumns"/>,r.Name 
+		FROM gg_user u, gg_role r, gg_menu m, gg_user_role ur, gg_role_menu rm
+		WHERE u.Id = ur.UserId AND r.Id = ur.RoleId 
+		AND rm.RoleId = r.ID AND rm.MenuId = m.Id 
+		AND m.Delflag = '1' AND u.Delflag = '1' AND r.DelFlag = '1' AND m.ParentId = #{id} 
+		<if test="userId != null">
+			AND u.Id = #{userId} 
+		</if>
+		<if test="userId == null">
+			AND r.EnName = 'visitors'
+		</if>
+		GROUP BY m.Id ORDER BY m.Index ASC
+	</select>
+
+</mapper>

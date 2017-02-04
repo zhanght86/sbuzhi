@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sbuzhi.gg.mvc.cms.dao.RolesDao">
+
+	<sql id="rolesColumns">
+		Id ,
+		Name ,
+		EnName ,
+		InsertBy ,
+		InsertDate ,
+		UpdateBy ,
+		UpdateDate ,
+		Remarks ,
+		DelFlag
+	</sql>
+
+	<select id="get" resultType="Role">
+		SELECT
+		<include refid="rolesColumns" />
+		FROM gg_role
+		WHERE Id = #{id}
+	</select>
+
+	<!-- 查询所有角色 -->
+	<select id="findAllList" resultType="Role" parameterType="Role">
+		SELECT
+		<include refid="rolesColumns" />
+		FROM gg_role
+		WHERE DelFlag = #{delFlag}
+	</select>
+
+	<insert id="insert" parameterType="Role"  useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO gg_role (
+			Name,
+			EnName,
+			InsertBy,
+			InsertDate,
+			UpdateBy,
+			UpdateDate,
+			Remarks,
+			DelFlag
+		) VALUES (
+			#{name},
+			#{enName},
+			#{insertBy},
+			#{insertDate},
+			#{updateBy},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<insert id="addRoleMenu" parameterType="java.util.List">
+		INSERT INTO gg_role_menu (
+			RoleId,
+			MenuId
+		) VALUES 
+		<foreach collection="list" item="rms" separator=","> (
+			#{rms.roleId}, 
+			#{rms.menuId}
+		) </foreach>
+	</insert>
+	
+	<update id="update" parameterType="Menu">
+		UPDATE gg_role 
+		SET Name = #{name}, EnName = #{enName}, Remarks = #{remarks}, DelFlag = #{delFlag} 
+		WHERE Id = #{id}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM gg_role_menu WHERE RoleId = #{roleId}
+	</delete>
+	
+</mapper>

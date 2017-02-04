@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sbuzhi.gg.mvc.cms.dao.MenusDao">
+
+	<sql id="menusColumns">
+		m.Id,
+		m.ParentId,
+		m.ParentIds,
+		m.Name,
+		m.Index,
+		m.Href,
+		m.Icon,
+		m.permission,
+		m.IsShow,
+		m.InsertDate,
+		m.InsertBy,
+		m.UpdateDate,
+		m.UpdateBy,
+		m.Remarks,
+		m.DelFlag
+	</sql>
+	
+	<select id="get" resultType="Menu" parameterType="Menu">
+		SELECT <include refid="menusColumns"/>
+		FROM gg_menu m 
+		WHERE Id = #{id} 
+		<if test="delFlag != null">
+			AND DelFlag = #{delFlag}
+		</if>
+	</select>
+	
+	<select id="getParentV1" resultType="Menu">
+		SELECT <include refid="menusColumns"/>
+		FROM gg_menu m 
+		WHERE m.ParentId = '1' or m.ParentId = '0' AND m.DelFlag = '1' 
+		ORDER BY m.Index ASC 
+	</select>
+	
+	<select id="getMenuTree" parameterType="Menu" resultType="Menu">
+		SELECT <include refid="menusColumns"/> 
+		FROM gg_menu m 
+		WHERE m.DelFlag = '1' AND m.ParentId = #{id} 
+		ORDER BY m.Index ASC
+	</select>
+	
+	<select id="getMenuByRole" resultType="String">
+		SELECT rm.MenuId
+		FROM gg_role r, gg_menu m, gg_role_menu rm 
+		WHERE rm.RoleId = r.Id AND rm.MenuId = m.Id AND m.DelFlag = '1'
+		AND r.Id = #{roleId}
+	</select>
+	
+	<select id="menuCategories" resultType="Menu">
+		select <include refid="menusColumns"/> 
+		FROM gg_menu m WHERE m.ParentId = 8 AND m.DelFlag = '1' ORDER BY m.Index ASC
+	</select>
+	
+	<insert id="insert" parameterType="Menu">
+		INSERT INTO gg_menu (
+			ParentId ,
+			ParentIds ,
+			Name ,
+			`Index` ,
+			Href ,
+			Icon ,
+			Permission ,
+			IsShow ,
+			InsertBy ,
+			InsertDate ,
+			UpdateBy ,
+			UpdateDate ,
+			Remarks ,
+			DelFlag
+		)VALUES(
+			#{parentId },
+			#{parentIds },
+			#{name },
+			#{index },
+			#{href },
+			#{icon },
+			#{permission },
+			#{isShow },
+			#{insertBy },
+			#{insertDate },
+			#{updateBy },
+			#{updateDate },
+			#{remarks },
+			#{delFlag }
+		)
+	</insert>
+	
+	<update id="update"  parameterType="Menu">
+		UPDATE gg_menu SET
+			ParentId = #{ parentId },
+			ParentIds = #{ parentIds },
+			Name = #{ name },
+			`Index` = #{ index },
+			Href = #{ href },
+			Icon = #{ icon },
+			Permission = #{ permission },
+			IsShow = #{ isShow },
+			InsertBy = #{ insertBy },
+			UpdateBy = #{ updateBy },
+			UpdateDate = #{ updateDate },
+			Remarks = #{ remarks },
+			DelFlag = #{ delFlag } 
+		WHERE Id = #{id}
+	</update>
+	
+	<delete id="delete">
+		UPDATE gg_menu SET DelFlag = {delFlag} WHERE Id = #{Id}
+	</delete>
+		
+</mapper>

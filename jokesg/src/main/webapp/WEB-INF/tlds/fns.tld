@@ -11,29 +11,12 @@
   <short-name>fns</short-name>
   <uri>http://java.sun.com/jsp/jstl/functionss</uri>
 
-  
-  <function>
-    <description>获取当前用户的菜单对象列表</description>
-    <name>getMenuList</name>
-    <function-class>com.thinkgem.jeesite.modules.sys.utils.UserUtils</function-class>
-    <function-signature>java.util.List getMenuList()</function-signature>
-    <example>${fns:getMenuList()}</example>  
-  </function>
-
   <function>
     <description>获取当前用户的菜单对象列表</description>
     <name>getMenuTree</name>
-    <function-class>com.jokesg.gg.mvc.sys.utils.UserUtils</function-class>
+    <function-class>com.sbuzhi.gg.mvc.sys.utils.UserUtils</function-class>
     <function-signature>java.util.List getMenuTree()</function-signature>
     <example>${fns:getMenuTree()}</example>
   </function>
   
-  <function>
-    <description>获取当前用户缓存</description>
-    <name>getCache</name>
-    <function-class>com.thinkgem.jeesite.modules.sys.utils.UserUtils</function-class>
-    <function-signature>java.lang.Object getCache(java.lang.String, java.lang.Object)</function-signature>
-    <example>${fns:getCache(cacheName, defaultValue)}</example>  
-  </function>
-	
 </taglib>

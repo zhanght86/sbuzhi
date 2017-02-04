@@ -32,13 +32,13 @@
 		</constructor-arg>
 	</bean>
 
-	<bean id="formAuthenticationFilter" class="com.jokesg.gg.mvc.sys.realm.FormAuthenticationFilter" />
+	<bean id="formAuthenticationFilter" class="com.sbuzhi.gg.mvc.sys.realm.FormAuthenticationFilter" />
 
 	<!-- 安全认证过滤器 -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/login.do" />
-		<property name="successUrl" value="/a/index.do" />
+		<property name="successUrl" value="/ws/index.do" />
 		<property name="filters">
 			<map>
 				<!-- <entry key="cas" value-ref="casFilter" /> -->
@@ -55,7 +55,7 @@
 		<property name="failureUrl" value="/login"/>
 	</bean>
 	
-	<bean id="systemAuthorizingRealm" class="com.jokesg.gg.mvc.sys.realm.SystemAuthorizingRealm" />
+	<bean id="systemAuthorizingRealm" class="com.sbuzhi.gg.mvc.sys.realm.SystemAuthorizingRealm" />
 
 	<!-- 定义Shiro安全管理配置 -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">

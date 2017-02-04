@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sbuzhi.gg.mvc.ims.dao.FansDao">
+
+	<sql id="fansColumns">
+		Id ,
+		FansId ,
+		UserId ,
+		InsertBy ,
+		InsertDate ,
+		UpdateBy ,
+		UpdateDate ,
+		Remarks ,
+		DelFlag
+	</sql>
+	
+	<select id="get" parameterType="Fans" resultType="Fans">
+		SELECT <include refid="fansColumns"/>
+		FROM gg_fans
+		WHERE UserId = #{userId} AND FansId = #{fansId} AND DelFlag = '1'
+	</select>
+
+	<insert id="insert" parameterType="Fans">
+		INSERT INTO gg_fans (
+			FansId ,
+			UserId ,
+			InsertBy ,
+			InsertDate ,
+			UpdateBy ,
+			UpdateDate ,
+			Remarks ,
+			DelFlag 
+		) VALUES (
+			#{fansId} ,
+			#{userId} ,
+			#{insertBy} ,
+			#{insertDate} ,
+			#{updateBy} ,
+			#{updateDate} ,
+			#{remarks} ,
+			#{delFlag} 
+		)
+	</insert>
+	
+	<select id="isConcern" parameterType="Fans" resultType="Fans">
+		SELECT <include refid="fansColumns"/> 
+		FROM gg_fans 
+		WHERE FansId = #{fansId} AND DelFlag = '1' AND UserId IN(
+			SELECT UserId FROM gg_jokesg WHERE Id = #{jokesgId}
+		)
+	</select>
+	
+	<select id="isConcern2" parameterType="Fans" resultType="Fans">
+		SELECT <include refid="fansColumns"/> 
+		FROM gg_fans 
+		WHERE FansId = #{fansId} AND UserId = #{userId} AND DelFlag = '1'
+	</select>
+	
+	<select id="getFansCount" parameterType="User" resultType="int">
+		SELECT COUNT(Id) FROM gg_fans WHERE DelFlag = '1'
+		<if test="userId != null and userId != ''">
+			AND UserId = #{userId} 
+		</if>
+		<if test="fansId != null and fansId != ''">
+			AND FansId = #{fansId}
+		</if>
+	</select>
+	
+	<update id="delete" parameterType="Fans">
+		UPDATE gg_fans SET
+			UpdateBy = #{updateBy},
+			UpdateDate = #{updateDate},
+			DelFlag = #{delFlag}
+		WHERE UserId = #{userId} AND FansId = #{fansId}
+	</update>
+
+</mapper>

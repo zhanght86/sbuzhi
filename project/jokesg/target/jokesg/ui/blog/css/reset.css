@@ -1,0 +1,116 @@
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, code, del, em, font, img, small, strike, strong, dl, dt, dd, ol, ul, li, fieldset, form, label, table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';
+	content: none;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.friends{
+	width: 573px;
+	height: 240px;
+	margin:10px auto;
+	background:url("../images/a.jpg") no-repeat;
+	position:relative;
+}
+
+.friends .m_pic{
+	width: 350px;
+    height: 220px;
+    border: 2px solid #EEE;
+    position: absolute;
+    top: 95px;
+    left: 12px;
+	display:none;
+}
+
+
+.friends .m_msg{
+	width: 375px;
+	height: 120px;
+    background:#FFF;
+	position:absolute;
+	top:100px;
+	left:30px;
+	border-radius:6px;
+	padding:10px;
+}
+
+.friends .m_msg .m_text{
+	width: 355px;
+	height: 80px;
+	border:2px solid #EEE;
+	border-radius:6px;
+}
+
+.friends .m_msg .m_text .m_edit{
+	width: 273px;
+	height: 78px;
+	border-radius:6px;
+	float:left;
+	padding:10px;
+}
+
+.friends .m_msg .m_text input{
+	display:none;
+}
+
+.friends .m_msg .m_text a{
+    width: 78px;
+	height: 78px;
+	display:block;
+	border-right:2px solid #EEE;
+	text-align:center;
+	text-decoration:none;
+	color:#9B9B9B;
+	padding-top:17px;
+	float:left;
+}
+
+.friends .m_msg .m_text a:hover{
+    background:#F2F2F2;
+}
+
+.friends .m_msg .m_text a span{
+	width: 32px;
+	height: 30px;
+	display:block;
+	margin:0 auto;
+	background:url("../images/img.png") no-repeat;
+	background-position: -333px -210px;
+}
+
+.friends .b_boxs{
+	width:365px;
+	height:180px;
+	background:#FFF;
+	box-shadow:1px 2px 3px 0 #000;
+	position:absolute;
+	top:138px;
+	left:28px;
+	display:none;
+}
+
+.f_btn{
+	left:right;
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sbuzhi.gg.mvc.sys.dao.CodeDao">
+
+    <sql id="codeColumns">
+		c.Id,c.UserId,c.Code,c.Type,c.InsertDate,c.InsertBy,
+		c.UpdateDate,c.UpdateBy,c.Remarks,c.DelFlag
+	</sql>
+	
+	<!-- 查询状态正常的Code -->
+	<select id="get" resultType="Code">
+		SELECT <include refid="codeColumns"/> from gg_code c where c.Id = #{id} AND c.DelFlag = 1
+	</select>
+	
+	<!-- 查询状态正常的Code -->
+	<select id="getByCode" resultType="Code">
+		SELECT <include refid="codeColumns"/> from gg_code c where c.Code = #{code} AND c.DelFlag = 1
+	</select>
+	
+    <insert id="insert" parameterType="Code">
+		INSERT INTO gg_code(
+			UserId,Code,Type,InsertDate,InsertBy,UpdateDate,UpdateBy,Remarks,DelFlag
+		) VALUES (
+			#{userId},#{code},#{type},#{insertDate},#{insertBy},#{updateDate},#{updateBy},#{remarks},1
+		)
+	</insert>
+	
+	<!-- 删除验证码（真删除） -->
+	<delete id="delete" parameterType="String">
+		DELETE FROM gg_code WHERE Id = #{id}
+	</delete>
+	
+	<!-- 删除过期验证码 -->
+	<delete id="delOverdueCode">
+		DELETE FROM gg_code WHERE DelFlag = 1 AND DATE_ADD(InsertDate, INTERVAL 1 day) <![CDATA[<]]> NOW()
+	</delete>
+	
+</mapper>

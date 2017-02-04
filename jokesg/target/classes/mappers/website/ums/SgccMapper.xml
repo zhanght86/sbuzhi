@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sbuzhi.website.mvc.ums.dao.SgccDao">
+
+	<sql id="sgccColumns">
+		s.Id ,
+		s.Ip ,
+		s.Name ,
+		s.Email ,
+		s.Title ,
+		s.Content ,
+		s.InsertBy ,
+		s.InsertDate ,
+		s.UpdateBy ,
+		s.UpdateDate ,
+		s.Remarks ,
+		s.DelFlag
+	</sql>
+	
+	<select id="get" resultType="Sgcc" parameterType="Sgcc">
+		SELECT <include refid="sgccColumns"/> FROM ws_sgcc s 
+		WHERE Name = #{name} AND DelFlag = #{delFlag}
+	</select>
+	
+	<select id="findAllList" resultType="Sgcc" parameterType="Sgcc">
+		SELECT <include refid="sgccColumns"/> FROM ws_sgcc s
+		WHERE DelFlag = #{delFlag}
+	</select>
+
+	<insert id="insert" parameterType="Sgcc">
+		INSERT INTO ws_sgcc(
+			Ip ,
+			Name ,
+			Email ,
+			Title ,
+			Content ,
+			InsertBy ,
+			InsertDate ,
+			UpdateBy ,
+			UpdateDate ,
+			Remarks ,
+			DelFlag
+		)VALUES(
+			#{ip },
+			#{name },
+			#{email },
+			#{title },
+			#{content },
+			#{insertBy },
+			#{insertDate },
+			#{updateBy },
+			#{updateDate },
+			#{remarks },
+			#{delFlag }
+		)
+	</insert>
+
+	<update id="update">
+		UPDATE ws_sgcc s SET
+		s.Ip = #{ip },
+		s.Name = #{name },
+		s.Email = #{email },
+		s.Title = #{title },
+		s.Content = #{content },
+		s.UpdateBy = #{updateBy },
+		s.UpdateDate = #{updateDate },
+		s.Remarks = #{remarks },
+		s.DelFlag = #{delFlag }
+		WHERE s.Id = #{id}
+	</update>
+</mapper>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sbuzhi.gg.mvc.ims.dao.InfoDao">
+
+	<sql id="infoColumns">
+		Id ,
+		Name ,
+		EnName ,
+		Sex ,
+		Age ,
+		TelPhone ,
+		IdCard ,
+		Address ,
+		Seat ,
+		Hometown ,
+		Birth ,
+		TwelveZodiac ,
+		Zodiac ,
+		BloodType ,
+		Profession ,
+		School ,
+		Academic ,
+		InsertBy ,
+		InsertDate ,
+		UpdateBy ,
+		UpdateDate ,
+		Remarks ,
+		DelFlag
+	</sql>
+
+	<select id="get" resultType="UserInfo">
+		SELECT
+		<include refid="infoColumns" />
+		FROM gg_user_info
+		WHERE Id = #{id}
+	</select>
+
+	<insert id="insert" parameterType="UserInfo">
+		INSERT INTO gg_user_info(
+			Id ,
+			Name ,
+			EnName ,
+			Sex ,
+			Age ,
+			TelPhone ,
+			IdCard ,
+			Address ,
+			Seat ,
+			Hometown ,
+			Birth ,
+			TwelveZodiac ,
+			Zodiac ,
+			BloodType ,
+			Profession ,
+			School ,
+			Academic ,
+			InsertBy ,
+			InsertDate ,
+			UpdateBy ,
+			UpdateDate ,
+			Remarks ,
+			DelFlag
+		)VALUES(
+			#{id},
+			#{name} ,
+			#{enName} ,
+			#{sex} ,
+			#{age} ,
+			#{telPhone} ,
+			#{idCard} ,
+			#{address} ,
+			#{seat} ,
+			#{hometown} ,
+			#{birth} ,
+			#{twelveZodiac} ,
+			#{zodiac} ,
+			#{bloodType} ,
+			#{profession },
+			#{school} ,
+			#{academic} ,
+			#{insertBy} ,
+			#{insertDate },
+			#{updateBy} ,
+			#{updateDate} ,
+			#{remarks} ,
+			#{delFlag}
+		)
+	</insert>
+
+	<update id="update" parameterType="UserInfo">
+		UPDATE gg_user_info SET
+			<if test="name != null and name != ''">
+				Name = #{name} ,
+			</if>
+			<if test="enName != null and enName != ''">
+				EnName = #{enName} ,
+			</if>
+			<if test="sex != null and sex != ''">
+				Sex = #{sex} ,
+			</if>
+			<if test="age != null and age != ''">
+				Age = #{age} ,
+			</if>
+			<if test="telPhone != null and telPhone != ''">
+				TelPhone = #{telPhone} ,
+			</if>
+			<if test="idCard != null and idCard != ''">
+				IdCard = #{idCard} ,
+			</if>
+			<if test="address != null and address != ''">
+				Address = #{address} ,
+			</if>
+			<if test="seat != null and seat != ''">
+				Seat = #{seat} ,
+			</if>
+			<if test="hometown != null and hometown != ''">
+				Hometown = #{hometown} ,
+			</if>
+			<if test="birth != null and birth != ''">
+				Birth = #{birth} ,
+			</if>
+			<if test="twelveZodiac != null and twelveZodiac != ''">
+				TwelveZodiac = #{twelveZodiac} ,
+			</if>
+			<if test="zodiac != null and zodiac != ''">
+				Zodiac = #{zodiac} ,
+			</if>
+			<if test="bloodType != null and bloodType != ''">
+				BloodType = #{bloodType} ,
+			</if>
+			<if test="profession != null and profession != ''">
+				Profession = #{profession} ,
+			</if>
+			<if test="school != null and school != ''">
+				School = #{school} ,
+			</if>
+			<if test="academic != null and academic != ''">
+				Academic = #{academic} ,
+			</if>
+			UpdateBy = #{updateBy} ,
+			UpdateDate = #{updateDate} ,
+			Remarks = #{remarks} ,
+			DelFlag = #{delFlag}
+		WHERE Id = #{id}
+	</update>
+
+</mapper>

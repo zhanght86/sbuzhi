@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sbuzhi.gg.mvc.cms.dao.UsersDao">
+
+	<sql id="usersColumns">
+		u.Id,
+		u.Username,
+		u.Password,
+		u.Name,
+		u.Nickname,
+		u.Email,
+		u.Phone,
+		u.Photo,
+		u.CompanyId,
+		u.IsCompany,
+		u.LoginIp,
+		u.LoginName,
+		u.LoginTime,
+		u.Status,
+		u.IsLogin,
+		u.InsertDate,
+		u.InsertBy,
+		u.UpdateDate,
+		u.UpdateBy,
+		u.Remarks,
+		u.DelFlag
+	</sql>
+	
+	<select id="get" parameterType="User" resultType="User">
+		SELECT <include refid="usersColumns"/>
+		FROM gg_user u
+		WHERE Id = #{id} AND DelFlag = #{delFlag}
+	</select>
+
+	<select id="findList" parameterType="User" resultType="User">
+		SELECT <include refid="usersColumns"/> 
+		FROM gg_user u
+		WHERE DelFlag = #{delFlag} 
+		<if test="username != null and username != ''">
+			AND Username LIKE CONCAT('%', #{username}, '%')
+		</if>
+		LIMIT #{paging.start},#{paging.end}
+	</select>
+		
+	<select id="findAllList" resultType="User">
+		SELECT * FROM gg_user WHERE Id in (
+			SELECT UserId FROM gg_visitor
+			WHERE InsertDate BETWEEN date_sub(NOW(),interval 7 day) and NOW() 
+			GROUP BY UserId ORDER BY COUNT(0) DESC
+		) LIMIT 9
+	</select>
+	
+	<select id="count" parameterType="User" resultType="int">
+		SELECT COUNT(Id) 
+		FROM gg_user
+		WHERE DelFlag = #{delFlag}
+		<if test="username != null and username != ''">
+			AND Username LIKE CONCAT('%', #{username}, '%')
+		</if>
+	</select>
+	
+	<select id="getUserByJokesgId" resultType="User">
+		SELECT <include refid="usersColumns"/> 
+		FROM gg_user u WHERE u.Id in (
+			SELECT j.UserId FROM gg_jokesg j WHERE j.Id = #{id}
+		)
+	</select>
+	
+	<select id="getFans" resultType="User" parameterType="User">
+		SELECT <include refid="usersColumns"/> 
+		FROM gg_user u WHERE u.Id in(
+			SELECT FansId FROM gg_fans WHERE UserId = #{id} AND DelFlag = '1'
+		) LIMIT #{paging.start},#{paging.end}
+	</select>
+	
+	<select id="getConcern" resultType="User" parameterType="User">
+		SELECT <include refid="usersColumns"/> 
+		FROM gg_user u WHERE u.Id in(
+			SELECT UserId FROM gg_fans WHERE FansId = #{id} AND DelFlag = '1'
+		) LIMIT #{paging.start},#{paging.end}
+	</select>
+	
+	<insert id="insert" parameterType="User">
+		INSERT INTO gg_user(
+			Id,
+			Username,
+			Password,
+			Name,
+			Nickname,
+			Email,
+			Phone,
+			Photo,
+			CompanyId,
+			IsCompany,
+			LoginIp,
+			LoginName,
+			LoginTime,
+			InsertDate,
+			InsertBy,
+			UpdateDate,
+			UpdateBy,
+			Remarks,
+			Status,
+			DelFlag
+		)
+		VALUES(
+			#{id},
+			#{username},
+			#{password},
+			#{name},
+			#{nickname},
+			#{email},
+			#{phone},
+			#{photo},
+			#{companyId},
+			#{isCompany},
+			#{loginIp},
+			#{loginName},
+			#{loginTime},
+			#{insertDate},
+			#{insertBy},
+			#{updateDate},
+			#{updateBy},
+			#{remarks},
+			#{status},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update" parameterType="User">
+		UPDATE gg_user SET
+			Username = #{username },
+			<if test="name != null and name != ''">
+				Name = #{name },
+			</if>
+			Nickname = #{nickname },
+			Email = #{email },
+			Phone = #{phone },
+			<if test="photo != null and photo != ''">
+				Photo = #{photo },
+			</if>
+			<if test="companyId != null and companyId != ''">
+				CompanyId = #{companyId },
+			</if>
+			IsCompany = #{isCompany },
+			<if test="loginIp != null and loginIp != ''">
+				LoginIp = #{loginIp },
+			</if>
+			<if test="loginName != null and loginName != ''">
+				LoginName = #{loginName },
+			</if>
+			<if test="loginTime != null and loginTime != ''">
+				LoginTime = #{loginTime },
+			</if>
+			Status = #{status },
+			<if test="isLogin != null and isLogin != ''">
+				IsLogin = #{isLogin },
+			</if>
+			<if test="insertBy != null and insertBy != ''">
+				InsertBy = #{insertBy },
+			</if>
+			<if test="insertDate != null and insertDate != ''">
+				InsertDate = #{insertDate },
+			</if>
+			<if test="updateBy != null and updateBy != ''">
+				UpdateBy = #{updateBy },
+			</if>
+			<if test="updateDate != null and updateDate != ''">
+				UpdateDate = #{updateDate },
+			</if>
+			<if test="remarks != null and remarks != ''">
+				Remarks = #{remarks },
+			</if>
+			DelFlag = #{delFlag }
+		WHERE Id = #{id }
+	</update>
+	
+</mapper>

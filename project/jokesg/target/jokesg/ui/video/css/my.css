@@ -1,0 +1,249 @@
+.a_top{
+	width: 100%;
+	height:75%;
+    border: 1px solid gainsboro;
+}
+
+.b_left{
+	border: 1px solid red;
+    width: 10%;
+	height:110px;
+	float:left;
+	
+}
+
+.b_left img{
+    width: 50px;
+	height:50px;
+	margin: 22px 0px 0px 45px;
+}
+
+.b_right{
+	border: 1px solid red;
+    width: 90%;
+	height:110px;
+	float:left;
+}
+
+.c_top{
+	width: 100%;
+	height:20%;
+    border: 1px solid gainsboro;
+}
+.c_middle{
+	width: 100%;
+	height:60%;
+    border: 1px solid blue;
+}
+
+.c_tail{
+	width: 100%;
+	height:20%;
+    border: 1px solid gainsboro;
+}
+
+.a_middle{
+	width: 100%;
+	height:10%;
+    border: 1px solid red;
+}
+
+.a_tail{
+	width: 100%;
+	height:15%;
+    border: 1px solid blue;
+}
+.d_left{
+	width: 10%;
+	height:100%;
+    border: 1px solid yellow;
+	float:left;
+}
+
+.d_left img{
+	width: 50px;
+	height:50px;
+    margin: 25px 0px 0px 45px;
+}
+
+.d_right{
+	width: 90%;
+	height:100%;
+    border: 1px solid yellow;
+	float:left;
+}
+
+.e_top{
+	margin: 25px 0px 0px 0px;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+.main {
+	width: 100%;
+	height: 220px;
+	background-color: #e6e6e6;
+}
+
+.a_left {
+	padding: 5px 0 8px 10px;
+	float: left;
+	width: 640px;
+	height: 180px;
+	position: relative;
+}
+
+.a_left h1 {
+	padding-right: 10px;
+	color: #525659;
+	overflow: hidden;
+	height: 33px;
+	line-height: 24px;
+	padding: 8px 0;
+	font-size: 18px;
+}
+
+.a_left h1 a {
+	display: inline-block;
+	vertical-align: text-bottom;
+	font-size: 12px;
+	margin-right: 10px;
+	padding: 0 5px;
+	height: 24px;
+	line-height: 24px;
+	border-radius: 4px;
+	color: #fff;
+	background: #ffafc9;
+	float: left;
+}
+
+.a_left time {
+	margin-left: 50px;
+}
+
+i {
+	font-style: normal;
+}
+
+.a_left .tminfo {
+	width: 100%;
+	margin-bottom: 12px;
+	height: 16px;
+	line-height: 16px;
+	color: #666;
+	font-size: 12px;
+	margin-top: 6px;
+}
+
+.a_left .tminfo a {
+	color: #666;
+}
+
+.a_left .bo img {
+	width: 23px;
+	height: 23px;
+}
+
+.a_left .bo span {
+	color: #222;
+	position: relative;
+	top: 0px;
+	margin-left: 8px;
+	font-size: 14px;
+}
+
+.a_right {
+	width: 315px;
+	height: 180px;
+	margin-top: 20px;
+	padding-left: 90px;
+	float: left;
+	position: relative;
+}
+
+.a_right .toxiang img {
+	height: 64px;
+	width: 64px;
+	border-radius: 64px;
+	margin: 0 auto;
+	float: left;
+	border: 2px solid transparent;
+}
+
+.a_right .shen {
+	width: 225px;
+	height: 180px;
+	float: right;
+}
+
+.a_right .shen .usname {
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+}
+
+.a_right .shen .si {
+	float: right;
+	width: 54px;
+	height: 30px;
+	margin-right: 30px;
+}
+
+.a_right .shen .si img {
+	height: 30px;
+	width: 30px;
+}
+
+.a_right .shen  span.xin {
+	font-size: 12px;
+	color: #666;
+	float: right;
+	margin-right: 0px;
+	margin-top: 4px;
+}
+
+.a_right .shen a.h {
+	font-size: 14px;
+	color: #00a1d6;
+}
+
+.a_right .shen .sign {
+	color: #333;
+	line-height: 20px;
+	font-size: 12px;
+}
+
+.a_right .shen .togao {
+	line-height: 18px;
+	height: 18px;
+	margin-bottom: 10px;
+	margin-top: 3px;
+}
+
+.a_right .shen .togao p {
+	color: #99a2aa;
+	display: inline-block;
+	width: 100px;
+	font-size: 12px;
+}
+
+.a_right .shen .gz {
+	height: 22px;
+	font-size: 14px;
+	line-height: 22px;
+	display: inline-block;
+	background-color: #00a1d6;
+	border: 1px solid #00a1d6;
+	width: 138px;
+	float: left;
+	color: #fff;
+	text-align: center;
+	border-radius: 4px;
+}

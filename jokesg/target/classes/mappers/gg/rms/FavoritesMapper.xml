@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sbuzhi.gg.mvc.rms.dao.FavoritesDao">
+
+    <sql id="favoritesColumns">
+		Id ,
+		UserId ,
+		JokesgId,
+		Type
+	</sql>
+	
+	<select id="get" parameterType="Favorites" resultType="Favorites">
+		SELECT <include refid="favoritesColumns"/> 
+		FROM gg_favorites 
+		WHERE UserId = #{userId} AND JokesgId = #{jokesgId} AND Type = #{type}
+	</select>
+	
+	<select id="getType" parameterType="Favorites" resultType="String">
+		SELECT Type
+		FROM gg_favorites 
+		WHERE UserId = #{userId} AND JokesgId = #{jokesgId}
+	</select>
+	
+	<select id="findList" parameterType="Favorites" resultType="Favorites">
+		SELECT <include refid="favoritesColumns"/> 
+		FROM gg_favorites 
+		WHERE 1 = 1
+		<if test="userId != null and userId != ''">
+			AND UserId = #{userId}
+		</if>
+		<if test="jokesgId != null and jokesgId != ''">
+			AND JokesgId = #{jokesgId}
+		</if>
+		<if test="type != null and type != ''">
+			AND Type = #{type}
+		</if>
+	</select>
+	
+	<select id="count" parameterType="Favorites" resultType="int">
+		SELECT COUNT(Id) FROM gg_favorites 
+		WHERE JokesgId = #{jokesgId} AND Type = #{type}
+	</select>
+	
+	<insert id="insert" parameterType="Favorites">
+		INSERT INTO gg_favorites(UserId,JokesgId,Type)VALUES(#{userId},#{jokesgId},#{type})
+	</insert>
+	
+	<delete id="delete" parameterType="Favorites">
+		DELETE FROM gg_favorites WHERE UserId = #{userId} AND JokesgId = #{jokesgId} AND Type = #{type}
+	</delete>
+	
+</mapper>

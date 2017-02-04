@@ -1,0 +1,57 @@
+.login{
+	position:absolute;
+	left:320px;
+	top:130px;
+	width:900px;
+	height:400px;
+	border:1px solid #CCC;
+}
+
+.left{
+	width:449px;
+	height:400px;
+	border:1px solid #CCC;
+	float:left;
+	
+}
+
+.right{
+	width:449px;
+	height:300px;
+	float:left;
+}
+
+.p{
+	width:447px;
+	height:20%;
+	padding:10px 0px 0px 50px;
+}
+
+.photo{
+	width:100px;
+	height:100px;
+	float:left;
+}
+
+.text{
+	width:260px;
+	height:100px;
+	float:left;
+	
+}
+
+.top{
+	width:447px;
+	height:70%;
+	padding:60px 0px 0px 50px;
+}
+
+.tail{
+	line-height:15px;
+	text-align:center;
+	width:447px;
+	height:10%;
+	padding:20px; 
+	background:#f2f7fa;
+	
+}

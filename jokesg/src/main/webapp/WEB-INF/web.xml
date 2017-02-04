@@ -68,7 +68,7 @@
 	<!-- Validate code -->
  	<servlet>
 		<servlet-name>ValidateCodeServlet</servlet-name>
-		<servlet-class>com.jokesg.gg.web.servlet.ValidateCodeServlet</servlet-class>
+		<servlet-class>com.sbuzhi.gg.web.servlet.ValidateCodeServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ValidateCodeServlet</servlet-name>

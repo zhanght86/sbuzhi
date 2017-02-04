@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sbuzhi.website.mvc.ums.dao.TopPicDao">
+
+	<sql id="topPicColumns">
+		tp.Id ,
+		tp.UserId ,
+		tp.Pic ,
+		tp.Title ,
+		tp.Content ,
+		tp.Button1 ,
+		tp.Button2 ,
+		tp.InsertBy ,
+		tp.InsertDate ,
+		tp.UpdateBy ,
+		tp.UpdateDate ,
+		tp.Remarks ,
+		tp.DelFlag
+	</sql>
+
+	<insert id="insert" parameterType="TopPic">
+		INSERT INTO ws_top_pic(
+			Id ,
+			UserId ,
+			Pic ,
+			Title ,
+			Content ,
+			Button1 ,
+			Button2 ,
+			InsertBy ,
+			InsertDate ,
+			UpdateBy ,
+			UpdateDate ,
+			Remarks ,
+			DelFlag
+		)VALUES(
+			#{id },
+			#{userId },
+			#{pic },
+			#{title },
+			#{content },
+			#{button1 },
+			#{button2 },
+			#{insertBy },
+			#{insertDate },
+			#{updateBy },
+			#{updateDate },
+			#{remarks },
+			#{delFlag }
+		)
+	</insert>
+
+</mapper>

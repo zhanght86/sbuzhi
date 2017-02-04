@@ -16,7 +16,7 @@
 	<context:property-placeholder location="classpath:jdbc.properties" />
 
 	<!-- 使用Annotation自动注册Bean，解决事物失效问题：在主容器中不扫描@Controller注解，在SpringMvc中只扫描@Controller注解。 -->
-	<context:component-scan base-package="com.jokesg.gg">
+	<context:component-scan base-package="com.sbuzhi.gg,com.sbuzhi.website">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 
@@ -31,13 +31,13 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<!-- 扫描entity -->
-		<property name="typeAliasesPackage" value="com.jokesg.gg" />
+		<property name="typeAliasesPackage" value="com.sbuzhi.gg,com.sbuzhi.website" />
 		<property name="mapperLocations" value="classpath:mappers/**/*.xml"></property>
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<!-- 扫描dao -->
-		<property name="basePackage" value="com.jokesg.gg" />
+		<property name="basePackage" value="com.sbuzhi.gg,com.sbuzhi.website" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 	</bean>
 	
